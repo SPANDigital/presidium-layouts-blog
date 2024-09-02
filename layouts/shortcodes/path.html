@@ -1,0 +1,3 @@
+{{- $url := urls.Parse .Site.BaseURL -}}
+{{- $url = path.Clean $url.Path -}}
+{{- path.Clean (printf "%s/%s" $url (path.Dir .Page.File.Path)) | default "" -}}
