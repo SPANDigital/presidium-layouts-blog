@@ -1,0 +1,10 @@
+module:
+  mounts:
+    - source: assets
+      target: assets
+    - source: layouts
+      target: layouts
+params:
+  favicon: images/favicon.ico
+  attributes:
+    apple: 1.2.1
