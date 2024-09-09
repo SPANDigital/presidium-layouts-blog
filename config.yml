@@ -8,5 +8,3 @@ module:
       target: layouts
 params:
   favicon: images/favicon.ico
-  attributes:
-    apple: 1.2.1
