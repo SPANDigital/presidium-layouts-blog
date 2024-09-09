@@ -1,0 +1,13 @@
+{{ define "header" }}
+    {{ .Scratch.Set "scope" "list" }}
+    {{ partial "page/header" . }}
+{{ end }}
+
+{{ define "content" }}
+    {{ partial "archive/list" . }}
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "page/footer" . }}
+{{ end }}
+
