@@ -7,4 +7,9 @@ module:
     - source: layouts
       target: layouts
 params:
+  lazyLoad: false
+  slugifyUrl: false
+  archive:
+    path: archive/index.md
   favicon: images/favicon.ico
+  
