@@ -8,8 +8,10 @@ module:
       target: layouts
 params:
   lazyLoad: false
-  slugifyUrl: false
+  maxLeftNavMenuItems: 20
+  minLeftNavMenuItems: 5
+  articleTTLDays: 365
+  favicon: images/favicon.ico
   archive:
     path: archive/index.md
-  favicon: images/favicon.ico
   

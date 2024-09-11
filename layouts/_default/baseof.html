@@ -2,13 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ $.Site.Title }}</title>
+    <title>{{ if .IsHome }}{{ $.Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{ block "metadata" . }}{{ end }}
     {{ hugo.Generator }}
     <link rel="icon" href="{{ .Site.Params.favicon | absURL }}" type="image/x-icon">
+    {{ $basePath := $.Site.Params.basePath  | default "/" }}
+    <link data-test="{{$basePath}}" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     {{ $style := resources.Get "presidium.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-    <link rel="preload" as="style" href="{{ $style.Permalink }}">
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
     {{ if resources.Get "index.scss" }}
       {{ with resources.Get "index.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
@@ -17,12 +18,11 @@
     {{ end }}
 
     {{ if $.Site.Params.enterprise_enabled }}
-      <link rel="preload" src="/presidium-enterprise.js" as="script">
-      <link href="/assets/css/portal_theme.css" rel="stylesheet">
+      <link data-test="{{$basePath}}" rel="stylesheet" href="{{ path.Join $basePath "/presidium-enterprise.css" }}">
+      <link data-test="{{$basePath}}" rel="preload" src="{{ path.Join $basePath "/presidium-enterprise.js" }}" as="script">
+      <script data-test="{{$basePath}}"> window.baseURL = '{{$basePath}}'; </script>
     {{ end }}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
     {{ if $.Site.Params.lazyLoad }}
       {{ $url := urls.Parse .Site.BaseURL }}
       {{ $url = path.Clean $url.Path }}
@@ -34,6 +34,12 @@
 <body id="presidium" {{ partial "page/attributes" . }}>
     {{ if $.Site.Params.enterprise_enabled }}
       <div class="toolbar-wrapper">
+        <button class="toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <div
           data-key="{{ $.Site.Params.enterprise_key }}"
           data-title="{{ $.Site.Title }}"
@@ -47,24 +53,23 @@
       <div id="presidium-navigation">
         {{ if $.Site.Params.lazyLoad }}
           <script>
-            $('#presidium-navigation').html(window.navigation);
+            document.querySelector('#presidium-navigation').innerHTML = window.navigation;
           </script>
         {{ else }}
-          {{ partial "navigation/root" . 0 }}
+          {{ partialCached "navigation/root" . 0 }}
         {{ end }}
       </div>
 
       <div id="resizer"></div>
       <div id="presidium-container" class="container-fluid">
           <div class="row">
-              <div id="presidium-content" class="col-lg-10 col-md-12">
+              <div id="presidium-content">
                   {{ block "header" . }}{{ end }}
-                  <section data-section="{{path.Dir .Path}}">
+                  <section data-section="{{ strings.TrimPrefix "/" .Path }}">
                     {{ block "content" . }}{{ end }}
                   </section>
-                  {{ block "footer" . }}{{ end }}
               </div>
-              <div class="col-lg-2"></div>
+              {{ block "footer" . }}{{ end }}
           </div>
       </div>
     </div>
@@ -72,7 +77,7 @@
     {{ partialCached "page/modal" 0 }}
     {{ partialCached "page/script" . }}
     {{ if $.Site.Params.analyticsToken }}
-      {{ partial "analytics.html"  . }}
+      {{ partialCached "analytics.html"  . }}
     {{ end }}
 </body>
 </html>
