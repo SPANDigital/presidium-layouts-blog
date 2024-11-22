@@ -25,3 +25,8 @@ go.work.sum
 .env
 
 public/
+resources/
+themes/
+
+.hugo_build.lock
+go.sum
