@@ -1,4 +1,5 @@
 module:
+  _merge: shallow
   imports:
     - path: github.com/spandigital/presidium-layouts-base
   mounts:
@@ -9,6 +10,7 @@ module:
     - source: layouts
       target: layouts
 params:
+  _merge: shallow
   lazyLoad: false
   maxLeftNavMenuItems: 20
   minLeftNavMenuItems: 5
@@ -16,4 +18,17 @@ params:
   favicon: images/favicon.ico
   archive:
     path: archive/index.md
+  frontmatter:
+  - key: author
+    type: email
+    strict: true
+  - key: date
+    type: date
+    strict: true
+  - key: title
+    type: text
+    strict: true
+  - key: description
+    type: text
+    strict: false
   
