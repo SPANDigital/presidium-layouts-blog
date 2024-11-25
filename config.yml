@@ -1,4 +1,5 @@
 module:
+  _merge: shallow
   imports:
     - path: github.com/spandigital/presidium-layouts-base
   mounts:
@@ -9,6 +10,7 @@ module:
     - source: layouts
       target: layouts
 params:
+  _merge: shallow
   lazyLoad: false
   maxLeftNavMenuItems: 20
   minLeftNavMenuItems: 5
