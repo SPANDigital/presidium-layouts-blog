@@ -18,4 +18,17 @@ params:
   favicon: images/favicon.ico
   archive:
     path: archive/index.md
+  frontmatter:
+  - key: author
+    type: email
+    strict: true
+  - key: date
+    type: date
+    strict: true
+  - key: title
+    type: text
+    strict: true
+  - key: description
+    type: text
+    strict: false
   
