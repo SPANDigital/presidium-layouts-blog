@@ -1,4 +1,4 @@
-module presidium-layouts-blog
+module github.com/spandigital/presidium-layouts-blog
 
 go 1.18
 
