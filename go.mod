@@ -2,4 +2,4 @@ module github.com/spandigital/presidium-layouts-blog
 
 go 1.18
 
-require github.com/spandigital/presidium-layouts-base v0.1.18 // indirect
+require github.com/spandigital/presidium-layouts-base v0.1.22 // indirect
