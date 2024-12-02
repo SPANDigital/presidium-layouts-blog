@@ -2,13 +2,6 @@ module:
   _merge: shallow
   imports:
     - path: github.com/spandigital/presidium-layouts-base
-  mounts:
-    - source: archetypes
-      target: archetypes
-    - source: assets
-      target: assets
-    - source: layouts
-      target: layouts
 params:
   _merge: shallow
   lazyLoad: false
@@ -17,7 +10,7 @@ params:
   articleTTLDays: 365
   favicon: images/favicon.ico
   archive:
-    path: archive/index.md
+    path: archive/_index.md
   frontmatter:
   - key: author
     type: email
