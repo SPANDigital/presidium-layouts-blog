@@ -3,7 +3,7 @@
 TLDR: A blog layout theme for Presidium sites.
 
 ### Overview 
-This repo makes up the `blog layouts` portion of the Presidium System Level Theme, and extends the officially support theme features in [presidium-layouts-base](https://github.com/spandigital/presidium-layouts-base).
+This repo makes up the `blog layouts` portion of the Presidium System Level Theme, and extends the officially supported theme features in [presidium-layouts-base](https://github.com/spandigital/presidium-layouts-base).
 For more info on Hugo Themes see the official Hugo documentation [here](https://gohugo.io/hugo-modules/theme-components/) 
 
 ## Getting Started
