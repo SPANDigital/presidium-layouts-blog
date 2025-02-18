@@ -4,7 +4,7 @@
 {{ $uid := .File.UniqueID }}
 {{ $roles := .Params.roles | default "All Roles" }}
 
-<li class="menu-row collapse child" style="overflow: hidden;" data-roles="{{ $roles }}">
+<li class="menu-row child" style="overflow: hidden;" data-roles="{{ $roles }}">
     <div class="link level-3">
         <a class="level-3 first-child" data-slug="{{ $slug }}" href="{{ .RelPermalink }}">
             <div class="menu-title">
