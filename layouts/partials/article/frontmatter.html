@@ -3,6 +3,8 @@
 {{ $isMediaOnly := in $mediaOnlyPresentations $presentation }}
 {{ $isParent := cond (not .Data.Pages) false true }}
 {{ $isMinimal := or $isParent $isMediaOnly }}
+{{ $slug := (partial "common/slug" .) }}
+{{ $articleLink := ($.Scratch.Get "articleLink") }}
 
 
 <div class="article-card article-actions">
@@ -12,10 +14,16 @@
         {{ end }}
         <div class="single-content">
             {{ if $isParent }}
-                <h1 class="single-title article-title">{{ .Title }}</h1>
+                <div class="single-title article-title article-actions" data-align="center-left">
+                <h1>{{ .Title }}</h1>
+                {{ partial "common/permalink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
+                </div>
                 <hr/>
             {{else}}
-                <h2 class="single-title article-title">{{ .Title }}</h2>
+                <div class="single-title article-title article-actions" data-align="center-left">
+                    <h2>{{ .Title }}</h2>
+                    {{ partial "common/permalink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
+                </div>
                 {{ partial "article/author" . }}
                 {{ partial "article/date" . }}
                 {{ partial "article/tags" . }}
