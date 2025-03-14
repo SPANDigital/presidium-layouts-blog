@@ -1,9 +1,7 @@
 module:
-  _merge: shallow
   imports:
     - path: github.com/spandigital/presidium-layouts-base
 params:
-  _merge: shallow
   lazyLoad: false
   maxLeftNavMenuItems: 20
   minLeftNavMenuItems: 5
@@ -12,16 +10,15 @@ params:
   archive:
     path: archive/_index.md
   frontmatter:
-  - key: author
-    type: email
-    strict: true
-  - key: date
-    type: date
-    strict: true
-  - key: title
-    type: text
-    strict: true
-  - key: description
-    type: text
-    strict: false
-  
+    - key: author
+      type: email
+      strict: true
+    - key: date
+      type: date
+      strict: true
+    - key: title
+      type: text
+      strict: true
+    - key: description
+      type: text
+      strict: false
