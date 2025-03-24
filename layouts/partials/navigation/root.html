@@ -4,7 +4,7 @@
 {{ $rootUrl := path.Clean $url.Path }}
 {{ $slugifyUrl := .Site.Params.slugifyUrl | default true }}
 
-<nav class="navbar scrollable-container" >
+<nav>
   <div class="navbar-header">{{ partial "navigation/brand.html" . }} </div>
   <div class="navbar-items">
     {{ $roles := .Site.Params.roles.options | default slice }} {{ if and (gt (len $roles) 0) .Site.Params.show.role }}
@@ -18,7 +18,7 @@
       </select>
     </div>
     {{ end }} {{ $currentPage := . }}
-    <ul class="nav navbar-nav">
+    <ul class="navbar-nav">
       {{ range $menu := .Site.Menus.main.ByWeight }}
         {{ $isRendering := true }}
         {{ if (isset $menu.Params "scope" ) }}
