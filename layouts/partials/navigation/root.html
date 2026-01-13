@@ -5,7 +5,6 @@
 {{ $slugifyUrl := .Site.Params.slugifyUrl | default true }}
 
 <nav class="navbar">
-  <div class="navbar-header">{{ partial "navigation/brand.html" . }} </div>
   <div class="navbar-items">
     {{ $roles := .Site.Params.roles.options | default slice }} {{ if and (gt (len $roles) 0) .Site.Params.show.role }}
     <div class="filter form-group">
