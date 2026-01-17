@@ -1,0 +1,36 @@
+name: Auto-Update Theme Versions
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Runs daily at 4 AM UTC
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  update-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Update Theme Versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./build/update_theme_versions.sh
