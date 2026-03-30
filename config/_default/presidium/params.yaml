@@ -2,8 +2,8 @@ frontmatter:
   - key: date
     type: date
     required: true
-    error_message: Date input error message
-    placeholder_message: Date input placeholder message (YYYY-MM-DD)
+    error_message: Please enter a valid date in YYYY-MM-DD format
+    placeholder_message: YYYY-MM-DD
   - key: description
     type: string
     required: false
