@@ -1,0 +1,12 @@
+frontmatter:
+  - key: date
+    type: date
+    required: true
+    error_message: Please enter a valid date in YYYY-MM-DD format
+    placeholder_message: YYYY-MM-DD
+  - key: description
+    type: string
+    required: false
+    display_rows: 5
+    error_message: Invalid description
+    placeholder_message: Enter a description
