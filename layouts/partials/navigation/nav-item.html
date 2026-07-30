@@ -4,18 +4,13 @@
 {{ $ttlHours := mul $ttlDays 24 }}
 
 {{ $childLevel := add .Level 1 }}
-{{ $slugifyUrl := and .SlugifyUrl }}
+{{ $useSectionViewUrlFormat := and .UseSectionViewUrlFormat }}
 {{ $roles := .NavPage.Params.roles | default "All Roles" }}
 {{/* rootUrl is the baseUrl but it defaults to "/" if no baseUrl is set */}}
 {{ $rootUrl := .RootUrl }}
 
-{{/* Use title if no slug */}}
-{{ $slug := humanize .NavPage.Params.Title }} {{/* Handles any dashes in the title */}}
-{{ $slug = anchorize $slug }}
-{{ $slug = replaceRE `(-{2,})` "-" $slug }} {{/* Replaces multiple dashes with one */}}
-{{ if .NavPage.Params.Slug }}
-    {{ $slug = .NavPage.Params.Slug}}
-{{ end }}
+{{/* Slug priority: front-matter slug -> title -> file name (see common/slug in presidium-layouts-base). */}}
+{{ $slug := partial "common/slug" .NavPage }}
 
 {{/* Parent slug */}}
 {{ $parentSlug := ((humanize .NavPage.Parent.Params.Title) | default "root") }}
@@ -25,11 +20,11 @@
     {{ $parentSlug = .NavPage.Parent.Params.Slug}}
 {{ end }}
 
-{{/* adds the slug to the link if the article has no children */}}
-{{ $articleLink := .NavPage.RelPermalink }}
-{{if and .NavPage.IsPage $slugifyUrl }}
-    {{ $articleLink = (printf "%v#%v" .NavPage.Parent.RelPermalink $slug ) }}
-{{end}}
+{{/* The left nav links articles using the section-view URL format: a #fragment within the
+     parent section page. Sections never anchor. Only when useSectionViewUrlFormat=false does
+     an article link to its own full standalone path. (see url/permalink in presidium-layouts-base) */}}
+{{ $single := not $useSectionViewUrlFormat }}
+{{ $articleLink := (partial "url/permalink" (dict "page" .NavPage "slug" $slug "single" $single)) }}
 
 {{/* combines the parent slug with the current slug to ensure it's globally unique */}}
 {{ $pageSlug := (printf "%v-%v" ($parentSlug) $slug )}}
@@ -71,14 +66,14 @@
             {{ $pages := (partial "common/pages" .NavPage )}}
             {{ if .NavPage.Site.Params.sortByFilePath }}
                 {{ range $index, $subMenu := (sort (after $offset $pages) "File.Path") }}
-                    {{ partial "navigation/nav-item" (dict "NavPage" $subMenu "Level" $childLevel "Index" $index "RootUrl" $rootUrl "SlugifyUrl" $slugifyUrl ) }}
+                    {{ partial "navigation/nav-item" (dict "NavPage" $subMenu "Level" $childLevel "Index" $index "RootUrl" $rootUrl "UseSectionViewUrlFormat" $useSectionViewUrlFormat ) }}
                 {{ end }}
             {{ else }}
                 {{ range $index, $subMenu := after $offset $pages }}
                     {{ if or (lt $index $maxLeftNavMenuItems) (ne $subMenu.Kind "page" ) }}
                         {{ $diff := now.Sub $subMenu.Page.Date }}
                         {{ if or (lt $index $minLeftNavMenuItems) (ne $subMenu.Kind "page") (lt $diff.Hours $ttlHours )}}
-                            {{ partial "navigation/nav-item" (dict "NavPage" $subMenu "Level" $childLevel "Index" $index "RootUrl" $rootUrl "SlugifyUrl" $slugifyUrl ) }}
+                            {{ partial "navigation/nav-item" (dict "NavPage" $subMenu "Level" $childLevel "Index" $index "RootUrl" $rootUrl "UseSectionViewUrlFormat" $useSectionViewUrlFormat ) }}
                         {{ end }}
                     {{ end }}
                 {{ end }}
