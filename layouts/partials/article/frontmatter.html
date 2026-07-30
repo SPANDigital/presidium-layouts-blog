@@ -16,13 +16,13 @@
             {{ if $isParent }}
                 <div class="single-title article-title article-actions" data-align="center-left">
                 <h1>{{ .Title }}</h1>
-                {{ partial "common/permalink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
+                {{ partial "common/copylink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
                 </div>
                 <hr/>
             {{else}}
                 <div class="single-title article-title article-actions" data-align="center-left">
                     <h2>{{ .Title }}</h2>
-                    {{ partial "common/permalink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
+                    {{ partial "common/copylink" (dict "copyTitle" "article" "Page" . "slug" $slug "permalink" $articleLink) }}
                 </div>
                 {{ partial "article/author" . }}
                 {{ partial "article/date" . }}

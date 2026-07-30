@@ -1,4 +1,4 @@
-{{ $slug := humanize .Params.Title }}
+{{ $slug := partial "common/slug" . }}
 {{ $articleId := .Params.id | default .File.Path }}
 
 {{ $uid := .File.UniqueID }}
