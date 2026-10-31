@@ -10,3 +10,12 @@ frontmatter:
     display_rows: 5
     error_message: Invalid description
     placeholder_message: Enter a description
+  - key: _thumbnail
+    type: bundle_file
+    display_name: Thumbnail
+    required: false
+    accept: [.png, .jpg, .jpeg, .webp]
+    fallback_glob: "thumbnail.*"
+    bundle_kinds: [leaf]
+    error_message: The thumbnail must be a PNG, JPG or WebP file in the article's folder
+    placeholder_message: Upload a thumbnail
