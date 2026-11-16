@@ -4,9 +4,10 @@
 {{ $thumbName := .Site.Params.thumbnail.name | default "thumbnail" }}
 
 {{/* an explicit _thumbnail value (a file in the article's folder, set by the editor) wins; */}}
+{{/* it is a literal file name, so it is looked up exactly rather than as a glob; */}}
 {{/* an empty or missing value, or a file that does not exist, falls through */}}
 {{ $image := "" }}
-{{ with .Params._thumbnail }}{{ with $.Resources.GetMatch . }}{{ $image = . }}{{ end }}{{ end }}
+{{ with .Params._thumbnail }}{{ with $.Resources.Get . }}{{ $image = . }}{{ end }}{{ end }}
 
 {{/* otherwise a resource named in frontmatter, else the default thumbnail.* filename */}}
 {{ if not $image }}
