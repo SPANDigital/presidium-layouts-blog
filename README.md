@@ -37,6 +37,19 @@ make serve
 ```
 Your served site should be available on `localhost:1313`.
 
+## Article thumbnails
+
+`layouts/partials/common/thumbnail.html` picks an article's thumbnail in this order:
+
+1. The file named by the `_thumbnail` frontmatter field, if the file exists in the article's folder. The WYSIWYG editor sets this field when an author uploads a thumbnail.
+2. A page resource named `thumbnail` (`resources: [{name: thumbnail, src: ...}]`).
+3. Any `thumbnail.*` file in the article's folder. New articles get the archetype's `thumbnail.png`.
+4. A generated placeholder image.
+
+An empty `_thumbnail` value means "not set". The theme declares `_thumbnail` in `config/_default/presidium/params.yaml` as a `bundle_file` field, a type that `presidium-layouts-base` defines. Only articles stored as a folder with an `index.md` can hold a thumbnail.
+
+The thumbnail appears on the home page hero (newest `hero: true` article), the home page Featured grid (newest `featured: true` articles), and at the top of the article page when `presentation` is `article`.
+
 ---
 
 ## Conventional Commits

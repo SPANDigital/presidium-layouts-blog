@@ -3,8 +3,16 @@
 {{/* default thumbnail filename prefix to look for in page */}}
 {{ $thumbName := .Site.Params.thumbnail.name | default "thumbnail" }}
 
-{{/* check if resource location is provided in frontmatter, else revert to default thumbnail.* filename */}}
-{{ $image := (.Resources.GetMatch $thumbResource) | default (.Resources.GetMatch ( printf "%s.*" $thumbName )) }}
+{{/* an explicit _thumbnail value (a file in the article's folder, set by the editor) wins; */}}
+{{/* it is a literal file name, so it is looked up exactly rather than as a glob; */}}
+{{/* an empty or missing value, or a file that does not exist, falls through */}}
+{{ $image := "" }}
+{{ with .Params._thumbnail }}{{ with $.Resources.Get . }}{{ $image = . }}{{ end }}{{ end }}
+
+{{/* otherwise a resource named in frontmatter, else the default thumbnail.* filename */}}
+{{ if not $image }}
+{{ $image = (.Resources.GetMatch $thumbResource) | default (.Resources.GetMatch ( printf "%s.*" $thumbName )) }}
+{{ end }}
 
 {{/* use provided thumbnail file if the file type is image */}}
 {{ if and $image (eq $image.ResourceType "image") }}
